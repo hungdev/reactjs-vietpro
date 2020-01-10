@@ -26,5 +26,7 @@ get comment của sản phẩm: {{mobile_shop}}/get-product-comments/:productId
 get product theo category: {{mobile_shop}}/get-products?categoryId=:categoryId
 
 
+get detail product: {{mobile_shop}}/product/:productId  
+
 
 File postman up trong gr lớp, có gì cứ mạnh dạn inbox mình.
