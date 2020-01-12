@@ -5,7 +5,12 @@ import Footer from './Layout/Footer'
 import Menu from './Layout/Menu'
 import Slide from './Layout/Slide'
 import SideBanner from './Layout/SideBanner'
-import Home from './Layout/Home'
+import Home from './Home'
+import Product from './Product'
+import Category from './Category'
+import Cart from './Cart'
+import Search from './Search'
+import Success from './Success'
 
 class App extends React.Component {
   constructor(props) {
@@ -24,7 +29,12 @@ class App extends React.Component {
               <div id="main" class="col-lg-8 col-md-12 col-sm-12">
                 <Slide />
                 <Switch>
-                  <Route path='/' component={Home} />
+                  <Route exact path="/" component={Home} />
+                  <Route path="/product/:productId" component={Product} />
+                  <Route path="/category/:categoryId" component={Category} />
+                  <Route exact path="/cart" component={Cart} />
+                  <Route path="/cart/success" component={Success} />
+                  <Route path="/search" component={Search} />
                 </Switch>
               </div>
               <SideBanner />
