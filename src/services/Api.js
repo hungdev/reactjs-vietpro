@@ -1,7 +1,7 @@
 import { create } from 'apisauce';
 // import { store } from '../App';
 // import { removeToken } from '../actions/authAction';
-import baseUrl from '../config';
+import baseUrl from './config';
 
 const api = create({
   baseURL: `${baseUrl.devUrl}`,
@@ -34,6 +34,7 @@ const api = create({
 // });
 
 
-export function login(params) { return api.post('/users/sign-in', params); }
-export function getUserDetail(params = {}) { return api.get('/users/detail', params); }
-export function getUserList(params = {}) { return api.get('/users', params); }
+export function getFeatureProducts(params) { return api.get('/get-products?isFeatured=true', params); }
+export function getNewProducts(params) { return api.get('/get-products?isFeatured=false', params); }
+// export function getUserDetail(params = {}) { return api.get('/users/detail', params); }
+// export function getUserList(params = {}) { return api.get('/users', params); }

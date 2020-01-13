@@ -1,5 +1,5 @@
 const config = {
-  devUrl: 'http://localhost:3000',
+  devUrl: 'http://domainforoffer.com',
 };
 
 export default config;
