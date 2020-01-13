@@ -36,5 +36,5 @@ const api = create({
 
 export function getFeatureProducts(params) { return api.get('/get-products?isFeatured=true', params); }
 export function getNewProducts(params) { return api.get('/get-products?isFeatured=false', params); }
-// export function getUserDetail(params = {}) { return api.get('/users/detail', params); }
-// export function getUserList(params = {}) { return api.get('/users', params); }
+export function getDetailProducts(productId, params = {}) { return api.get(`/product/${productId}`, params); }
+export function getProductComments(productId, params = {}) { return api.get(`/get-product-comments/${productId}`, params); }

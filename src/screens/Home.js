@@ -35,7 +35,7 @@ class Home extends Component {
     try {
       const [featPr, newPr] = await Promise.all([
         API.getFeatureProducts({ limit: 9 }),
-        API.getNewProducts({ limit: 9 }),
+        API.getNewProducts({ limit: 6 }),
       ])
       const featData = _.get(featPr, 'data.data', [])
       const newData = _.get(newPr, 'data.data', [])
