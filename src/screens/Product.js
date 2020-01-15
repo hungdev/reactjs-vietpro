@@ -4,11 +4,17 @@ import _ from 'lodash'
 import moment from 'moment'
 import { getImageUrl } from '../utils'
 
-class Header extends Component {
+const defaultData = {
+  name: '',
+  content: '',
+  email: ''
+}
+class Product extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      formData: defaultData,
+      name: '',
     }
   }
 
@@ -23,7 +29,7 @@ class Header extends Component {
     try {
       const detailProduct = await API.getDetailProducts(id)
       this.setState({ data: detailProduct.data.data })
-      console.log(detailProduct)
+      // console.log(detailProduct)
     } catch (error) {
 
     }
@@ -35,16 +41,38 @@ class Header extends Component {
     try {
       const detailProduct = await API.getProductComments(id)
       this.setState({ commentData: detailProduct.data.data })
-      console.log(detailProduct)
+      // console.log(detailProduct)
     } catch (error) {
 
     }
   }
 
 
+  onInputChange(val, type) {
+    const { formData } = this.state
+    this.setState({
+      formData: {
+        ...formData,
+        [type]: val.target.value
+      }
+    })
+  }
+
+  async onSubmit() {
+    const { formData } = this.state
+    const { match } = this.props
+    const id = _.get(match, 'params.productId')
+    try {
+      await API.createComment({ ...formData, productId: id })
+      this.getProductComments()
+      this.setState({ formData: defaultData })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   render() {
-    const { data, commentData } = this.state
+    const { data, commentData, formData } = this.state
     const isStock = data && data.is_stock ? 'Còn hàng' : 'Hết hàng'
     return (
       <div id="product">
@@ -78,20 +106,43 @@ class Header extends Component {
         <div id="comment" class="row">
           <div class="col-lg-12 col-md-12 col-sm-12">
             <h3>Bình luận sản phẩm</h3>
-            <form method="post">
+            <form method="post" onSubmit={(e) => { e.preventDefault() }}>
               <div class="form-group">
                 <label>Tên:</label>
-                <input name="comm_name" required type="text" class="form-control" />
+                <input
+                  name="name"
+                  required type="text"
+                  class="form-control"
+                  value={formData.name}
+                  onChange={(e) => this.onInputChange(e, 'name')}
+                />
               </div>
               <div class="form-group">
                 <label>Email:</label>
-                <input name="comm_mail" required type="email" class="form-control" id="pwd" />
+                <input
+                  name="email"
+                  required type="email"
+                  class="form-control"
+                  value={formData.email}
+                  onChange={(e) => this.onInputChange(e, 'email')}
+                />
               </div>
               <div class="form-group">
                 <label>Nội dung:</label>
-                <textarea name="comm_details" required rows="8" class="form-control"></textarea>
+                <textarea
+                  name="content"
+                  required rows="8"
+                  class="form-control"
+                  value={formData.content}
+                  onChange={(e) => this.onInputChange(e, 'content')}
+                />
               </div>
-              <button type="submit" name="sbm" class="btn btn-primary">Gửi</button>
+              <button
+                type="submit"
+                name="sbm"
+                class="btn btn-primary"
+                onClick={() => this.onSubmit()}
+              >Gửi</button>
             </form>
           </div>
         </div>
@@ -117,4 +168,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default Product;

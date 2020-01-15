@@ -38,3 +38,5 @@ export function getFeatureProducts(params) { return api.get('/get-products?isFea
 export function getNewProducts(params) { return api.get('/get-products?isFeatured=false', params); }
 export function getDetailProducts(productId, params = {}) { return api.get(`/product/${productId}`, params); }
 export function getProductComments(productId, params = {}) { return api.get(`/get-product-comments/${productId}`, params); }
+export function createComment(params) { return api.post(`/create-comment`, params); }
+export function getCategory(params = {}) { return api.get(`/get-categories`, params); }
