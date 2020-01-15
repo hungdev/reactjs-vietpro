@@ -9,7 +9,7 @@ export default function Items({ detail }) {
         <img src={getImageUrl(detail)} alt='product' />
       </Link>
       <h4>
-        <Link to={`product/1`}>{detail && detail.name}</Link>
+        <Link to={`/product/${detail && detail._id}`}>{detail && detail.name}</Link>
       </h4>
       <p>Giá Bán: <span>{detail && detail.price}đ</span></p>
     </div>

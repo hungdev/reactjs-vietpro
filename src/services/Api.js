@@ -40,3 +40,4 @@ export function getDetailProducts(productId, params = {}) { return api.get(`/pro
 export function getProductComments(productId, params = {}) { return api.get(`/get-product-comments/${productId}`, params); }
 export function createComment(params) { return api.post(`/create-comment`, params); }
 export function getCategory(params = {}) { return api.get(`/get-categories`, params); }
+export function getProductByName(params) { return api.get('/get-products', params); }
