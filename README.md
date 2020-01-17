@@ -12,10 +12,10 @@ cd vào folder code vừa clone:
 cd reactjs-vietpro
 ```
 
-checkout sang branch buổi 2:
+checkout sang branch buổi 4:
 
 ```
-git checkout b2
+git checkout b4
 ```
 
 kéo package:
