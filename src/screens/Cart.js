@@ -17,7 +17,7 @@ class Header extends Component {
 
   render() {
     const { cart } = this.props
-    console.log('cart', cart)
+    const totalPrice = cart.reduce((acc, cur) => { return acc + (cur.price * cur.quantity) }, 0)
     return (
       <>
         <div id="my-cart">
@@ -42,7 +42,7 @@ class Header extends Component {
                     onChange={(e) => this.onChangeQuantity(e.target.value, el)}
                   />
                 </div>
-                <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>
+                <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{el.price * el.quantity}đ</b><a href="#">Xóa</a></div>
               </div>
             ))}
 
@@ -52,7 +52,7 @@ class Header extends Component {
                 <button id="update-cart" class="btn btn-success" type="submit" name="sbm">Cập nhật giỏ hàng</button>
               </div>
               <div class="cart-total col-lg-2 col-md-2 col-sm-12"><b>Tổng cộng:</b></div>
-              <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>88.970.000đ</b></div>
+              <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{Intl.NumberFormat('vn-VN').format(totalPrice)}đ</b></div>
             </div>
           </form>
 
