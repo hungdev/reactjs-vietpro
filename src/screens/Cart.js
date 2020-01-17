@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      quantity: 1
+    };
+  };
+
+  onQuantity(value) {
+    this.setState({ quantity: value })
+  }
+
   render() {
+    const { quantity } = this.state
     return (
       <>
         <div id="my-cart">
@@ -18,51 +31,17 @@ class Header extends Component {
               </div>
 
               <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-                <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1" />
+                <input
+                  type="number"
+                  id="quantity" class="form-control form-blue quantity"
+                  value={quantity}
+                  min="1"
+                  onChange={(e) => this.onQuantity(e.target.value)}
+                />
               </div>
               <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>
             </div>
-            <div class="cart-item row">
-              <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-                <img src="/images/product-2.png" />
-                <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
-              </div>
-              <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-                <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1" />
-              </div>
-              <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>
-            </div>
-            <div class="cart-item row">
-              <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-                <img src="/images/product-3.png" />
-                <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
-              </div>
-              <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-                <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1" />
-              </div>
-              <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>
-            </div>
-            <div class="cart-item row">
-              <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-                <img src="/images/product-4.png" />
-                <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
-              </div>
-              <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-                <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1" />
-              </div>
-              <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>
-            </div>
-            <div class="cart-item row">
-              <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-                <img src="/images/product-5.png" />
-                <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
-              </div>
-              <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-                <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1" />
-              </div>
 
-              <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>
-            </div>
 
             <div class="row">
               <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
@@ -114,4 +93,23 @@ class Header extends Component {
   }
 }
 
-export default Header;
+// lấy state từ store redux
+function mapStateToProps(state) {
+  return {
+    // state: state từ store, 
+    // cartReducer: reducer được import trong index combineReducers
+    // cart: lấy từ state trong cartReducer, ( dòng 5 trong cartReducer.js)
+    cart: state.cartReducer.cart
+  }
+}
+
+// gửi action lên reducer
+function mapDispatchToProps(dispatch) {
+  return {
+    // addCart là action
+    // dispatchAddCart: (product) => dispatch(addCart(product)),
+    // dispatchDeletePerson: (person) => dispatch(removePerson(person))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

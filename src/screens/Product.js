@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import * as API from '../services/Api'
 import _ from 'lodash'
 import moment from 'moment'
+import { connect } from 'react-redux';
 import { getImageUrl } from '../utils'
+import { addCart } from '../actions/cartAction'
 
 const defaultData = {
   name: '',
@@ -71,9 +73,17 @@ class Product extends Component {
     }
   }
 
+  addCart(data) {
+    const { dispatchAddCart, history } = this.props
+    dispatchAddCart({ ...data, quantity: 1 })
+    // history.push('/cart')
+  }
+
   render() {
     const { data, commentData, formData } = this.state
+
     const isStock = data && data.is_stock ? 'Còn hàng' : 'Hết hàng'
+
     return (
       <div id="product">
         <div id="product-head" class="row">
@@ -91,7 +101,10 @@ class Product extends Component {
               <li id="price-number">{data && data.price}đ</li>
               <li id="status">{isStock}</li>
             </ul>
-            <div id="add-cart"><a href="#">Mua ngay</a></div>
+            <div id="add-cart">
+              <a href="#" onClick={() => this.addCart(data)}>
+                Mua ngay</a>
+            </div>
           </div>
         </div>
         <div id="product-body" class="row">
@@ -168,4 +181,23 @@ class Product extends Component {
   }
 }
 
-export default Product;
+// lấy state từ store redux
+function mapStateToProps(state) {
+  return {
+    // state: state từ store, 
+    // cartReducer: reducer được import trong index combineReducers
+    // cart: lấy từ state trong cartReducer, ( dòng 5 trong cartReducer.js)
+    cart: state.cartReducer.cart
+  }
+}
+
+// gửi action lên reducer
+function mapDispatchToProps(dispatch) {
+  return {
+    // addCart là action
+    dispatchAddCart: (product) => dispatch(addCart(product)),
+    // dispatchDeletePerson: (person) => dispatch(removePerson(person))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product)
