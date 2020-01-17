@@ -16,11 +16,13 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 const persistConfig = {
   key: 'root',
   storage,
+  // only navigation will be persisted
   // whitelist: [                    
   //   'accountReducer'
   // ],
+  // navigation will not be persisted
   blacklist: [
-    // 'late'
+    // 'cartReducer'
   ]
 }
 

@@ -1,5 +1,6 @@
 // reducers/peopleReducer.js
 import * as ActionType from '../actions/actionTypes';
+import _ from 'lodash'
 
 const initialState = {
   cart: [],
@@ -8,11 +9,14 @@ const initialState = {
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case ActionType.ADD_CART:
-      console.log('cart reducer')
-      console.log('action', action)
       return {
         ...state,
         cart: [...state.cart, action.product],
+      };
+    case ActionType.CHANGE_QUANTITY:
+      return {
+        ...state,
+        cart: _.sortBy(_.unionBy([action.product, ...state.cart], '_id'), '_id')
       };
 
     default:

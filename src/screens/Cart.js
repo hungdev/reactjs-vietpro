@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { changeQuantity } from '../actions/cartAction';
+import { getImageUrl } from '../utils'
 
 class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      quantity: 1
     };
   };
 
-  onQuantity(value) {
-    this.setState({ quantity: value })
+  onChangeQuantity(value, product) {
+    const { dispatchChangeQuantity } = this.props
+    dispatchChangeQuantity({ ...product, quantity: value })
   }
 
   render() {
-    const { quantity } = this.state
+    const { cart } = this.props
+    console.log('cart', cart)
     return (
       <>
         <div id="my-cart">
@@ -24,23 +27,24 @@ class Header extends Component {
             <div class="cart-nav-item col-lg-3 col-md-3 col-sm-12">Giá</div>
           </div>
           <form method="post">
-            <div class="cart-item row">
-              <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-                <img src="/images/product-1.png" />
-                <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
+            {cart && cart.map((el, i) => (
+              <div key={el._id} class="cart-item row">
+                <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
+                  <img src={getImageUrl(el)} alt='product' />
+                  <h4>{el.name}</h4>
+                </div>
+                <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
+                  <input
+                    type="number"
+                    id="quantity" class="form-control form-blue quantity"
+                    value={el.quantity}
+                    min="1"
+                    onChange={(e) => this.onChangeQuantity(e.target.value, el)}
+                  />
+                </div>
+                <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>
               </div>
-
-              <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-                <input
-                  type="number"
-                  id="quantity" class="form-control form-blue quantity"
-                  value={quantity}
-                  min="1"
-                  onChange={(e) => this.onQuantity(e.target.value)}
-                />
-              </div>
-              <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>
-            </div>
+            ))}
 
 
             <div class="row">
@@ -107,7 +111,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     // addCart là action
-    // dispatchAddCart: (product) => dispatch(addCart(product)),
+    dispatchChangeQuantity: (product) => dispatch(changeQuantity(product)),
     // dispatchDeletePerson: (person) => dispatch(removePerson(person))
   }
 }

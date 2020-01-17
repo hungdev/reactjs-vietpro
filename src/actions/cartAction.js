@@ -1,17 +1,15 @@
 import * as ActionType from './actionTypes'
 
 export const addCart = (product) => {
-  console.log('add card action', product)
   return {
     type: ActionType.ADD_CART,
     product
   }
 }
 
-export const changeQuantity = (quantity) => {
-  console.log('add card action', quantity)
+export const changeQuantity = (product) => {
   return {
     type: ActionType.CHANGE_QUANTITY,
-    quantity
+    product
   }
 }

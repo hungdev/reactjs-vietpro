@@ -31,7 +31,7 @@ class Header extends Component {
             <div id="logo" class="col-lg-3 col-md-3 col-sm-12">
               <h1>
                 <Link to="/">
-                  <img class="img-fluid" src="/images/logo.png" />
+                  <img className="img-fluid" src="/images/logo.png" />
                 </Link>
               </h1>
             </div>
