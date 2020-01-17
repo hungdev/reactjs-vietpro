@@ -38,7 +38,6 @@ class Category extends Component {
   }
   render() {
     const { products, categoryId } = this.state
-    console.log('categoryId', categoryId)
     return (
       <div class="products">
         <h3>iPhone (hiện có {products && products.length} sản phẩm)</h3>

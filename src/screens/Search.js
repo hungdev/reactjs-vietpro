@@ -11,62 +11,26 @@ class Search extends Component {
   };
 
   componentDidMount() {
-    //c1
-    // this.getData()
-
-    //cc2
-    const { location } = this.props
-    const query = new URLSearchParams(location.search);
-    const queryString = query.get('query')
     this.getData()
-    this.setState({ queryString })
-  }
-
-  // c1
-  // componentWillReceiveProps(newProps) {
-  //   const { location } = newProps
-  //   const query = new URLSearchParams(location.search);
-  //   const queryString = query.get('query')
-  //   this.getData(queryString)
-  // }
-
-  //c2
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { location } = nextProps
-    const query = new URLSearchParams(location.search);
-    const queryString = query.get('query')
-    if (queryString !== prevState.queryString) {
-      return { queryString: nextProps.queryString };
-    }
-    else return null;
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { location } = this.props
-    const query = new URLSearchParams(location.search);
-    const queryString = query.get('query')
+    const preQuery = new URLSearchParams(prevProps.location.search);
+    const getPreQuery = preQuery.get('query') // get iphone, props cũ
 
-    if (prevState.queryString !== queryString) {
-      this.getData(queryString);
+    const nextQuery = new URLSearchParams(this.props.location.search);
+    const getNextQuery = nextQuery.get('query')  // get samsung props mới
+
+
+    if (getPreQuery !== getNextQuery) {
+      this.getData(getNextQuery)
     }
   }
 
-  //c1
-  // async getData(newQuery) {
-  //   const { location } = this.props
-  //   const query = new URLSearchParams(location.search);
-  //   const queryString = query.get('query')
-  //   try {
-  //     const result = await API.getProductByName({ name: (newQuery || queryString) })
-  //     this.setState({ products: _.get(result, 'data.data', []) })
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  //c2
   async getData(newQuery) {
-    const { queryString } = this.state
+    const { location } = this.props
+    const query = new URLSearchParams(location.search);
+    const queryString = query.get('query')
     try {
       const result = await API.getProductByName({ name: (newQuery || queryString) })
       this.setState({ products: _.get(result, 'data.data', []) })
