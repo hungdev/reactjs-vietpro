@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
+import { NavLink, Link } from 'react-router-dom'
 import * as API from '../../services/Api'
 
 class Footer extends Component {
@@ -32,7 +33,15 @@ class Footer extends Component {
             <div id="menu" class="collapse navbar-collapse">
               <ul>
                 {categories && _.map(categories, e => (
-                  <li key={e._id} class="menu-item"><a href="#">{e.name}</a></li>
+                  <Link
+                    key={e._id}
+                    class="menu-item"
+                    to={{
+                      pathname: `/category/${e._id}`,
+                    }}
+                  >
+                    <a href="#">{e.name}</a>
+                  </Link>
                 ))}
               </ul>
             </div>
