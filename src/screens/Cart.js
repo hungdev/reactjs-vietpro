@@ -17,6 +17,7 @@ class Header extends Component {
 
   render() {
     const { cart } = this.props
+    console.log('v', cart)
     const totalPrice = cart.reduce((acc, cur) => { return acc + (cur.price * cur.quantity) }, 0)
     return (
       <>
@@ -26,7 +27,7 @@ class Header extends Component {
             <div class="cart-nav-item col-lg-2 col-md-2 col-sm-12">Tùy chọn</div>
             <div class="cart-nav-item col-lg-3 col-md-3 col-sm-12">Giá</div>
           </div>
-          <form method="post">
+          <form method="post" onSubmit={(e) => { e.preventDefault() }}>
             {cart && cart.map((el, i) => (
               <div key={el._id} class="cart-item row">
                 <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
@@ -42,14 +43,14 @@ class Header extends Component {
                     onChange={(e) => this.onChangeQuantity(e.target.value, el)}
                   />
                 </div>
-                <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{el.price * el.quantity}đ</b><a href="#">Xóa</a></div>
+                <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{Intl.NumberFormat('vn-VN').format((el.price * el.quantity))}đ</b><a href="#">Xóa</a></div>
               </div>
             ))}
 
 
             <div class="row">
               <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-                <button id="update-cart" class="btn btn-success" type="submit" name="sbm">Cập nhật giỏ hàng</button>
+                <button id="update-cart" class="btn btn-success" onClick={() => alert('ok')} > Cập nhật giỏ hàng</button>
               </div>
               <div class="cart-total col-lg-2 col-md-2 col-sm-12"><b>Tổng cộng:</b></div>
               <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{Intl.NumberFormat('vn-VN').format(totalPrice)}đ</b></div>
