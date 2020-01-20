@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeQuantity } from '../actions/cartAction';
+import { changeQuantity, removeProduct } from '../actions/cartAction';
 import { getImageUrl } from '../utils'
 
 class Header extends Component {
@@ -16,7 +16,7 @@ class Header extends Component {
   }
 
   render() {
-    const { cart } = this.props
+    const { cart, dispatchRemoveProduct } = this.props
     console.log('v', cart)
     const totalPrice = cart.reduce((acc, cur) => { return acc + (cur.price * cur.quantity) }, 0)
     return (
@@ -43,7 +43,12 @@ class Header extends Component {
                     onChange={(e) => this.onChangeQuantity(e.target.value, el)}
                   />
                 </div>
-                <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{Intl.NumberFormat('vn-VN').format((el.price * el.quantity))}đ</b><a href="#">Xóa</a></div>
+                <div class="cart-price col-lg-3 col-md-3 col-sm-12">
+                  <b>{Intl.NumberFormat('vn-VN').format((el.price * el.quantity))}đ</b>
+                  <div onClick={() => dispatchRemoveProduct(el)} className='btn'>
+                    <a>Xóa</a>
+                  </div>
+                </div>
               </div>
             ))}
 
@@ -113,6 +118,7 @@ function mapDispatchToProps(dispatch) {
   return {
     // addCart là action
     dispatchChangeQuantity: (product) => dispatch(changeQuantity(product)),
+    dispatchRemoveProduct: (product) => dispatch(removeProduct(product)),
     // dispatchDeletePerson: (person) => dispatch(removePerson(person))
   }
 }

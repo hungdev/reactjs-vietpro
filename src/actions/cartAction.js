@@ -13,3 +13,10 @@ export const changeQuantity = (product) => {
     product
   }
 }
+
+export const removeProduct = (product) => {
+  return {
+    type: ActionType.REMOVE_PRODUCT,
+    product
+  }
+}

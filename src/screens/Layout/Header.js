@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 class Header extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class Header extends Component {
 
   render() {
     const { textSearch } = this.state
+    const { cart } = this.props
     return (
       <div id="header">
         <div class="container">
@@ -49,7 +51,7 @@ class Header extends Component {
               </form>
             </div>
             <div id="cart" class="col-lg-3 col-md-3 col-sm-12">
-              <Link class="mt-4 mr-2" to={'/cart'}>giỏ hàng</Link><span class="mt-3">8</span>
+              <Link class="mt-4 mr-2" to={'/cart'}>giỏ hàng</Link><span class="mt-3">{cart && cart.length}</span>
             </div>
           </div>
         </div>
@@ -61,4 +63,15 @@ class Header extends Component {
   }
 }
 
-export default withRouter(Header);
+// lấy state từ store redux
+function mapStateToProps(state) {
+  return {
+    cart: state.cartReducer.cart
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

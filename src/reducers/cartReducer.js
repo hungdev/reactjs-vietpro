@@ -49,6 +49,12 @@ export default function cartReducer(state = initialState, action) {
         ...state,
         cart: newCart
       }
+    case ActionType.REMOVE_PRODUCT:
+      const removeCartArr = state.cart.filter(e => e._id !== action.product._id)
+      return {
+        ...state,
+        cart: removeCartArr
+      }
 
     default:
       return state;
