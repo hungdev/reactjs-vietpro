@@ -56,6 +56,12 @@ export default function cartReducer(state = initialState, action) {
         cart: removeCartArr
       }
 
+    case ActionType.REMOVE_ALL_PRODUCT:
+      return {
+        ...state,
+        cart: []
+      }
+
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeQuantity, removeProduct } from '../actions/cartAction';
+import { changeQuantity, removeProduct, removeAllProduct } from '../actions/cartAction';
 import { getImageUrl } from '../utils'
 
 class Header extends Component {
@@ -16,8 +16,7 @@ class Header extends Component {
   }
 
   render() {
-    const { cart, dispatchRemoveProduct } = this.props
-    console.log('v', cart)
+    const { cart, dispatchRemoveProduct, dispatchRemoveAllProduct } = this.props
     const totalPrice = cart.reduce((acc, cur) => { return acc + (cur.price * cur.quantity) }, 0)
     return (
       <>
@@ -55,7 +54,7 @@ class Header extends Component {
 
             <div class="row">
               <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-                <button id="update-cart" class="btn btn-success" onClick={() => alert('ok')} > Cập nhật giỏ hàng</button>
+                <button id="update-cart" class="btn btn-success" onClick={() => dispatchRemoveAllProduct()} > Xóa hết giỏ hàng</button>
               </div>
               <div class="cart-total col-lg-2 col-md-2 col-sm-12"><b>Tổng cộng:</b></div>
               <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{Intl.NumberFormat('vn-VN').format(totalPrice)}đ</b></div>
@@ -119,7 +118,7 @@ function mapDispatchToProps(dispatch) {
     // addCart là action
     dispatchChangeQuantity: (product) => dispatch(changeQuantity(product)),
     dispatchRemoveProduct: (product) => dispatch(removeProduct(product)),
-    // dispatchDeletePerson: (person) => dispatch(removePerson(person))
+    dispatchRemoveAllProduct: (person) => dispatch(removeAllProduct(person))
   }
 }
 

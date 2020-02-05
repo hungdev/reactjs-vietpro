@@ -20,3 +20,9 @@ export const removeProduct = (product) => {
     product
   }
 }
+
+export const removeAllProduct = () => {
+  return {
+    type: ActionType.REMOVE_ALL_PRODUCT,
+  }
+}
