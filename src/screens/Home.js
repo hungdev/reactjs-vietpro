@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Items } from '../components';
 import * as API from '../services/Api'
 import _ from 'lodash'
+import Loading from '../components/Loading'
+
 class Home extends Component {
   constructor(props) {
     super(props)
@@ -33,35 +35,37 @@ class Home extends Component {
   //cach 2
   async getProduct() {
     try {
+      this.setState({ loading: true })
       const [featPr, newPr] = await Promise.all([
         API.getFeatureProducts({ limit: 9 }),
         API.getNewProducts({ limit: 6 }),
       ])
       const featData = _.get(featPr, 'data.data', [])
       const newData = _.get(newPr, 'data.data', [])
-      this.setState({ featData, newData })
+      this.setState({ featData, newData, loading: false })
     } catch (error) {
       console.log(error)
     }
   }
 
   render() {
-    const { featData, newData } = this.state
+    const { featData, newData, loading } = this.state
     return (
-      <>
+      <div>
+        <Loading loading={loading} />
         <div class="products">
-          <h3>Sản phẩm nổi bật</h3>
+          {!loading && <h3>Sản phẩm nổi bật</h3>}
           <div class="product-list card-deck">
             {featData && featData.map((e, i) => <Items key={i} detail={e} />)}
           </div>
         </div>
         <div class="products">
-          <h3>Sản phẩm mới</h3>
+          {!loading && <h3>Sản phẩm mới</h3>}
           <div class="product-list card-deck">
             {newData && newData.map((e, i) => <Items key={i} detail={e} />)}
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

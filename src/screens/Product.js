@@ -98,7 +98,7 @@ class Product extends Component {
               <li><span>Tình trạng:</span> {data && data.status}</li>
               <li><span>Khuyến Mại:</span> {data && data.accessories}</li>
               <li id="price">Giá Bán (chưa bao gồm VAT)</li>
-              <li id="price-number">{data && data.price}đ</li>
+              <li id="price-number">{Intl.NumberFormat('vn-VN').format(data && data.price)}đ</li>
               <li id="status">{isStock}</li>
             </ul>
             <div id="add-cart">
