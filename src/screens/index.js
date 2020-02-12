@@ -11,6 +11,7 @@ import Category from './Category'
 import Cart from './Cart'
 import Search from './Search'
 import Success from './Success'
+import NoMatchPage from './Layout/PageNotFound'
 
 class App extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class App extends React.Component {
                   <Route exact path="/cart" component={Cart} />
                   <Route path="/cart/success" component={Success} />
                   <Route path="/search" component={Search} />
+                  <Route component={NoMatchPage} />
                 </Switch>
               </div>
               <SideBanner />
